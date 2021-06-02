@@ -28,4 +28,4 @@ data = dict(
         # ann_file='balloon/val/annotation_coco.json'))
 
 # We can use the pre-trained Mask RCNN model to obtain higher performance
-load_from = 'checkpoints/model_final_b275ba.pkl'
+# load_from = 'checkpoints/model_final_b275ba.pkl'
