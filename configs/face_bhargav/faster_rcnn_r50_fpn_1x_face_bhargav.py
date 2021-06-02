@@ -1,5 +1,5 @@
 # The new config inherits a base config to highlight the necessary modification
-_base_ = 'configs/faster_rcnn/faster_rcnn_r50_fpn_1x_coco.py'
+_base_ = 'faster_rcnn/faster_rcnn_r50_fpn_1x_coco.py'
 
 # We also need to change the num_classes in head to match the dataset's annotation
 # model = dict(
@@ -28,4 +28,4 @@ data = dict(
         # ann_file='balloon/val/annotation_coco.json'))
 
 # We can use the pre-trained Mask RCNN model to obtain higher performance
-# load_from = 'checkpoints/model_final_b275ba.pkl'
+load_from = 'checkpoints/faster_rcnn_r50_fpn_1x_coco_20200130-047c8118.pth'
