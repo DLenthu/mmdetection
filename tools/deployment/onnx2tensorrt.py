@@ -31,9 +31,8 @@ def onnx2tensorrt(onnx_file,
     import tensorrt as trt
     onnx_model = onnx.load(onnx_file)
     input_shape = input_config['input_shape']
-    max_shape = input_config['max_shape']
     # create trt engine and wraper
-    opt_shape_dict = {'input': [input_shape, input_shape, max_shape]}
+    opt_shape_dict = {'input': [input_shape, input_shape, input_shape]}
     max_workspace_size = get_GiB(workspace_size)
     trt_engine = onnx2trt(
         onnx_model,
@@ -85,9 +84,6 @@ def onnx2tensorrt(onnx_file,
             output shapes: {trt_shapes}')
         trt_masks = trt_outputs[2] if with_mask else None
 
-        if trt_masks is not None and trt_masks.dtype != np.bool:
-            trt_masks = trt_masks >= 0.5
-            ort_masks = ort_masks >= 0.5
         # Show detection outputs
         if show:
             CLASSES = get_classes(dataset)
@@ -153,12 +149,6 @@ def parse_args():
         default=[400, 600],
         help='Input size of the model')
     parser.add_argument(
-        '--max-shape',
-        type=int,
-        nargs='+',
-        default=None,
-        help='Maximum input size of the model in TensorRT')
-    parser.add_argument(
         '--mean',
         type=float,
         nargs='+',
@@ -194,16 +184,6 @@ if __name__ == '__main__':
     else:
         raise ValueError('invalid input shape')
 
-    if not args.max_shape:
-        max_shape = input_shape
-    else:
-        if len(args.max_shape) == 1:
-            max_shape = (1, 3, args.max_shape[0], args.max_shape[0])
-        elif len(args.max_shape) == 2:
-            max_shape = (1, 3) + tuple(args.max_shape)
-        else:
-            raise ValueError('invalid input max_shape')
-
     assert len(args.mean) == 3
     assert len(args.std) == 3
 
@@ -211,8 +191,7 @@ if __name__ == '__main__':
     input_config = {
         'input_shape': input_shape,
         'input_path': args.input_img,
-        'normalize_cfg': normalize_cfg,
-        'max_shape': max_shape
+        'normalize_cfg': normalize_cfg
     }
 
     # Create TensorRT engine

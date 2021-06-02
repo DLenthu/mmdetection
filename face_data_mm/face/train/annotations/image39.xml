@@ -1,0 +1,26 @@
+<annotation>
+	<folder>face_data</folder>
+	<filename>image39.jpg</filename>
+	<path>/home/bhargav/Documents/Detecto/face_recognition/face_data/image39.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>400</width>
+		<height>700</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>Bhargav</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>120</xmin>
+			<ymin>305</ymin>
+			<xmax>283</xmax>
+			<ymax>474</ymax>
+		</bndbox>
+	</object>
+</annotation>
